@@ -6,11 +6,6 @@ resource "aws_dynamodb_table" "dynamodb-table" {
   hash_key       = var.hash_key
   range_key      = var.range_key
 
-  ttl {
-    attribute_name = var.ttl_attribute_name
-    enabled        = var.ttl_enabled
-  }
-
   dynamic "attribute" {
     for_each = var.attributes
 
@@ -18,8 +13,8 @@ resource "aws_dynamodb_table" "dynamodb-table" {
       name = attribute.value.name
       type = attribute.value.type
     }
-  
-   dynamic "global_secondary_index" {
+  }
+  dynamic "global_secondary_index" {
     for_each = var.global_secondary_indexes
 
     content {
